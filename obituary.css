@@ -8,7 +8,7 @@
 /* 0. 基礎設置與字型定義 */
 /* ========================================= */
 
-/* 引入自訂字型 (假設 Iansui-Regular.ttf 放在根目錄或 fonts/ 子目錄) */
+/* 引入自訂字型 (假設 Iansui-Regular.ttf 放在根目錄) */
 @font-face {
   font-family: 'Iansui';
   src: url('Iansui-Regular.ttf') format('truetype');
@@ -19,7 +19,7 @@
 /* CSS 變數：方便統一管理色彩和字型 */
 :root {
   --font-serif: 'Iansui', 'Noto Serif TC', serif;
-  --font-display: 'ZCOOL QingKe HuangYou', sans-serif; /* 顯示標題用 */
+  --font-display: 'ZCOOL QingKe HuangYou', 'ZCOOL KuaiLe', sans-serif; /* 顯示標題用 */
   --color-primary: #3d2b1f; /* 深棕色/主要文字 */
   --color-secondary: #8b5e3c; /* 咖啡色/強調 */
   --color-accent: #0077e6; /* 藍色/按鈕 */
@@ -195,7 +195,7 @@ header h1 {
   transform: scale(1.02);
 }
 
-/* 燈箱：用於訃告紙本放大 */
+/* 燈箱：用於訃告紙本放大 (使用 #zoom-container) */
 #zoom-container {
   position: fixed;
   top: 0; left: 0;
@@ -231,7 +231,7 @@ header h1 {
   opacity: 1;
 }
 
-/* 燈箱：用於花籃、交通圖片放大 */
+/* 燈箱：用於花籃、名片、交通圖片放大 (使用 #image-overlay) */
 #image-overlay {
   position: fixed; top: 0; left: 0;
   width: 100vw; height: 100vh;
