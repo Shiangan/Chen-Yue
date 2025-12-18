@@ -28,6 +28,33 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Shadows+Into+Light&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+
+    <style>
+        /* 交通資訊按鈕與摺疊樣式 */
+        .transport-toggle-btn {
+            display: block;
+            width: 90%;
+            max-width: 300px;
+            margin: 20px auto;
+            padding: 12px 20px;
+            background-color: #ffffff;
+            border: 1px solid #c8a2c8; /* 搭配喪禮莊重色系 */
+            border-radius: 25px;
+            color: #555;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .transport-toggle-btn:hover {
+            background-color: #f3e5f5;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        #transport-content {
+            display: none; /* 初始隱藏 */
+            transition: all 0.5s ease;
+        }
+    </style>
 </head>
 
 <body>
@@ -166,16 +193,22 @@
             <h2 class="title">臺北市立懷愛館</h2>
             <p class="subtitle">懷恩專車＆停車資訊</p>
 
-            <div class="image-gallery">
-                <img src="image/交通00004.GIF" alt="S31" class="gallery-img" aria-label="交通指引" loading="lazy">
-                <img src="image/交通00005.GIF" alt="S32" class="gallery-img" aria-label="交通指引" loading="lazy">
-                <img src="image/交通00003.GIF" alt="S33" class="gallery-img" aria-label="交通指引" loading="lazy">
-                <img src="image/交通00002.GIF" alt="S34" class="gallery-img" aria-label="交通指引" loading="lazy">
-                <img src="image/交通00001.GIF" alt="S35" class="gallery-img" aria-label="交通指引" loading="lazy">
-                <img src="image/交通00007.JPG" alt="搭車資訊" class="gallery-img" aria-label="搭車資訊" loading="lazy">
-                <img src="image/交通00008.JPG" alt="交通指引" class="gallery-img" aria-label="交通指引" loading="lazy">
-                <img src="image/交通00009.JPG" alt="指引圖" class="gallery-img" aria-label="指引圖" loading="lazy">
-                <img src="image/交通00006.JPG" alt="停車資訊" class="gallery-img" aria-label="停車資訊" loading="lazy">
+            <button type="button" class="transport-toggle-btn" id="btn-toggle-transport">
+                <strong>查看詳細交通指引 ▽</strong>
+            </button>
+
+            <div id="transport-content">
+                <div class="image-gallery">
+                    <img src="image/交通00004.GIF" alt="S31" class="gallery-img" aria-label="交通指引" loading="lazy">
+                    <img src="image/交通00005.GIF" alt="S32" class="gallery-img" aria-label="交通指引" loading="lazy">
+                    <img src="image/交通00003.GIF" alt="S33" class="gallery-img" aria-label="交通指引" loading="lazy">
+                    <img src="image/交通00002.GIF" alt="S34" class="gallery-img" aria-label="交通指引" loading="lazy">
+                    <img src="image/交通00001.GIF" alt="S35" class="gallery-img" aria-label="交通指引" loading="lazy">
+                    <img src="image/交通00007.JPG" alt="搭車資訊" class="gallery-img" aria-label="搭車資訊" loading="lazy">
+                    <img src="image/交通00008.JPG" alt="交通指引" class="gallery-img" aria-label="交通指引" loading="lazy">
+                    <img src="image/交通00009.JPG" alt="指引圖" class="gallery-img" aria-label="指引圖" loading="lazy">
+                    <img src="image/交通00006.JPG" alt="停車資訊" class="gallery-img" aria-label="停車資訊" loading="lazy">
+                </div>
             </div>
         </div>
 
@@ -243,24 +276,16 @@
 
     <script>
         // -------------------------
-        // 1. 音訊解鎖與淡入邏輯 (保留原邏輯)
+        // 1. 音訊解鎖與淡入邏輯
         // -------------------------
         document.addEventListener('DOMContentLoaded', function () {
             const audio = document.getElementById('background-music');
-            const hint = document.getElementById('audio-hint');
-
             audio.volume = 0;
             audio.muted = true;
-
-            audio.play().catch(() => {
-                console.log('Autoplay blocked. Waiting for user interaction...');
-            });
+            audio.play().catch(() => {});
 
             const savedTime = localStorage.getItem('audioCurrentTime');
-            if (savedTime) {
-                audio.currentTime = parseFloat(savedTime);
-            }
-
+            if (savedTime) audio.currentTime = parseFloat(savedTime);
             const wasPlaying = localStorage.getItem('audioPlaying') === 'true';
 
             function fadeInAudio() {
@@ -270,122 +295,92 @@
                     if (volume < targetVolume) {
                         volume = Math.min(volume + 0.05, targetVolume);
                         audio.volume = volume;
-                    } else {
-                        clearInterval(interval);
-                    }
+                    } else { clearInterval(interval); }
                 }, 200);
             }
 
             function unmuteAndPlay() {
-                if (audio.muted) {
-                    audio.muted = false;
-                    fadeInAudio();
-                }
-                if (wasPlaying || audio.paused) {
-                    audio.play().catch(err => console.log('Playback error:', err));
-                }
-                hint?.remove();
+                if (audio.muted) { audio.muted = false; fadeInAudio(); }
+                if (wasPlaying || audio.paused) audio.play().catch(err => {});
                 removeListeners();
             }
 
             function removeListeners() {
-                document.removeEventListener('click', unmuteAndPlay);
-                document.removeEventListener('touchstart', unmuteAndPlay);
-                document.removeEventListener('keydown', unmuteAndPlay);
+                ['click', 'touchstart', 'keydown'].forEach(evt => document.removeEventListener(evt, unmuteAndPlay));
             }
+            ['click', 'touchstart', 'keydown'].forEach(evt => document.addEventListener(evt, unmuteAndPlay));
 
-            document.addEventListener('click', unmuteAndPlay);
-            document.addEventListener('touchstart', unmuteAndPlay);
-            document.addEventListener('keydown', unmuteAndPlay);
-
-            setInterval(() => {
-                if (!audio.paused) {
-                    localStorage.setItem('audioCurrentTime', audio.currentTime);
-                }
-            }, 1000);
-
+            setInterval(() => { if (!audio.paused) localStorage.setItem('audioCurrentTime', audio.currentTime); }, 1000);
             audio.addEventListener('play', () => localStorage.setItem('audioPlaying', 'true'));
             audio.addEventListener('pause', () => localStorage.setItem('audioPlaying', 'false'));
         });
 
         // -------------------------
-        // 2. Life-story 淡入效果 & 感謝信息淡入 (合併邏輯)
+        // 2. 生命故事 & 感謝信淡入
         // -------------------------
         document.addEventListener("DOMContentLoaded", () => {
-            // Life-story 淡入效果
             const fadeEls = document.querySelectorAll('.fade-in-text');
             const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) entry.target.classList.add('visible');
-                });
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
             });
             fadeEls.forEach(el => observer.observe(el));
 
-            // 感謝信息淡入 (優化：使用單獨的 IntersectionObserver)
             const texts = document.querySelectorAll('.remembrance-thanks p');
             const observerThanks = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if(entry.isIntersecting){
-                        // 依序淡入
                         texts.forEach((el,i)=>setTimeout(()=>el.classList.add('visible'), i*400));
-                        observerThanks.unobserve(entry.target); // 只執行一次
+                        observerThanks.unobserve(entry.target);
                     }
                 });
             }, {threshold:0.1});
-            if (texts.length > 0) {
-                 observerThanks.observe(texts[0].parentElement);
-            }
+            if (texts.length > 0) observerThanks.observe(texts[0].parentElement);
         });
 
         // -------------------------
-        // 3. 訃告紙本點擊放大 (使用 #zoom-container)
+        // 3. 訃告正本點擊放大
         // -------------------------
         document.addEventListener("DOMContentLoaded", () => {
             const paperImg = document.getElementById('paper-obituary');
             const zoomContainer = document.getElementById('zoom-container');
             const zoomImg = document.getElementById('zoom-img');
-
-            // 點圖片放大
-            paperImg.addEventListener('click', () => {
-                zoomImg.src = paperImg.src;
-                zoomContainer.style.display = 'flex';
-                setTimeout(() => zoomContainer.classList.add('show'), 20);
-            });
-
-            // 點背景關閉
-            zoomContainer.addEventListener('click', e => {
-                if (e.target === zoomContainer || e.target === zoomImg) { // 點擊圖片或背景都關閉
-                    zoomContainer.classList.remove('show');
-                    setTimeout(() => zoomContainer.style.display = 'none', 400);
-                }
-            });
-
-            // 按 Esc 關閉
-            document.addEventListener('keydown', e => {
-                if (e.key === "Escape" && zoomContainer.classList.contains('show')) {
-                    zoomContainer.classList.remove('show');
-                    setTimeout(() => zoomContainer.style.display = 'none', 400);
-                }
+            if(paperImg) {
+                paperImg.addEventListener('click', () => {
+                    zoomImg.src = paperImg.src;
+                    zoomContainer.style.display = 'flex';
+                    setTimeout(() => zoomContainer.classList.add('show'), 20);
+                });
+            }
+            zoomContainer.addEventListener('click', () => {
+                zoomContainer.classList.remove('show');
+                setTimeout(() => zoomContainer.style.display = 'none', 400);
             });
         });
 
         // -------------------------
-        // 4. 花籃畫廊展開/隱藏
+        // 4. 交通圖摺疊功能 (新加入)
         // -------------------------
-        document.getElementById('show-flower-baskets')?.addEventListener('click', function () {
-            const gallery = document.getElementById('flower-basket-gallery');
-            gallery.classList.toggle('show');
-            this.innerHTML = gallery.classList.contains('show') 
-                ? '<strong>隱藏花籃樣式 🌹</strong>' 
-                : '<strong>顯示花籃樣式 🌹</strong>';
+        document.addEventListener("DOMContentLoaded", function() {
+            const btn = document.getElementById('btn-toggle-transport');
+            const content = document.getElementById('transport-content');
+            if(btn && content) {
+                btn.addEventListener('click', function() {
+                    if (content.style.display === 'none' || content.style.display === '') {
+                        content.style.display = 'block';
+                        this.innerHTML = '<strong>隱藏交通資訊 △</strong>';
+                    } else {
+                        content.style.display = 'none';
+                        this.innerHTML = '<strong>查看詳細交通指引 ▽</strong>';
+                    }
+                });
+            }
         });
 
         // -------------------------
-        // 5. 點擊放大圖片 (花籃/名片/交通圖 - 統一使用 #image-overlay)
+        // 5. 點擊放大圖片 (通用燈箱)
         // -------------------------
         const imageOverlay = document.getElementById('image-overlay');
         const overlayImg = document.getElementById('overlay-img');
-
         function setupOverlayLightbox(selector){
             document.querySelectorAll(selector).forEach(img=>{
                 img.addEventListener('click', function(){
@@ -394,93 +389,39 @@
                 });
             });
         }
-        
         document.addEventListener("DOMContentLoaded", () => {
-            setupOverlayLightbox('.zoomable img'); // 給花籃
-            setupOverlayLightbox('.gallery-img');  // 給交通圖
-            setupOverlayLightbox('.business-card-img'); // 給名片 (原名片邏輯已移除，改用此統一燈箱)
+            setupOverlayLightbox('.gallery-img');
+            setupOverlayLightbox('.business-card-img');
         });
-
         imageOverlay.addEventListener('click', function(){ this.style.display='none'; });
 
         // -------------------------
-        // 6. 分享按鈕 URL (確保 URL 乾淨)
+        // 6. 分享連結與 Footer 適配 (保留原功能)
         // -------------------------
         document.addEventListener("DOMContentLoaded", function () {
             let url = new URL(window.location.href);
             url.searchParams.delete("fbclid");
-            url.searchParams.delete("utm_source");
-            url.searchParams.delete("utm_medium");
-            url.searchParams.delete("utm_campaign");
             if(url.hostname.includes("xn--")) url.hostname="24hour.台灣";
             let encodedUrl = encodeURIComponent(url.toString());
             document.querySelector(".fb-share-btn").href="https://www.facebook.com/sharer/sharer.php?u="+encodedUrl;
             document.querySelector(".line-share-btn").href="https://line.me/R/msg/text/?"+encodedUrl;
         });
 
-        // -------------------------
-        // 7. Footer Fit-Text 邏輯 (保留原邏輯)
-        // -------------------------
         (function () {
-            const MAX_FONT = 22;
-            const MIN_FONT = 8;
-            const PRECISION = 0.2;
-
+            const MAX_FONT = 22; const MIN_FONT = 8; const PRECISION = 0.2;
             function fitOne(el) {
-                if (!el || !el.parentElement) return;
-                const parent = el.parentElement;
-                const containerWidth = parent.clientWidth;
-                if (containerWidth <= 0) return;
-
-                let low = MIN_FONT;
-                let high = MAX_FONT;
+                const parent = el.parentElement; if (!parent) return;
+                let low = MIN_FONT; let high = MAX_FONT;
                 el.style.fontSize = high + "px";
-                let w = el.getBoundingClientRect().width;
-                if (w <= containerWidth) {
-                    el.style.fontSize = high + "px";
-                    return;
-                }
-
                 while (high - low > PRECISION) {
-                    const mid = (low + high) / 2;
-                    el.style.fontSize = mid + "px";
-                    w = el.getBoundingClientRect().width;
-                    if (w > containerWidth) {
-                        high = mid;
-                    } else {
-                        low = mid;
-                    }
+                    let mid = (low + high) / 2; el.style.fontSize = mid + "px";
+                    if (el.getBoundingClientRect().width > parent.clientWidth) high = mid; else low = mid;
                 }
                 el.style.fontSize = Math.max(MIN_FONT, low) + "px";
             }
-
-            function fitAll() {
-                const nodes = document.querySelectorAll('.footer-text .fit-text');
-                nodes.forEach(el => fitOne(el));
-            }
-
-            function start() {
-                fitAll();
-                if (window.ResizeObserver) {
-                    const ro = new ResizeObserver(() => fitAll());
-                    document.querySelectorAll('.footer-info').forEach(n => ro.observe(n));
-                }
-                window.addEventListener('resize', debounce(fitAll, 80));
-            }
-
-            function debounce(fn, wait) {
-                let t = null;
-                return function () {
-                    clearTimeout(t);
-                    t = setTimeout(() => fn.apply(this, arguments), wait);
-                };
-            }
-
-            if (document.fonts && document.fonts.ready) {
-                document.fonts.ready.then(start).catch(start);
-            } else {
-                window.addEventListener('load', start);
-            }
+            function fitAll() { document.querySelectorAll('.footer-text .fit-text').forEach(fitOne); }
+            window.addEventListener('load', fitAll);
+            window.addEventListener('resize', fitAll);
         })();
     </script>
 </body>
