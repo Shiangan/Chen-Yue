@@ -201,107 +201,36 @@
         </section>
     </main>
 
-     <section class="reveal" style="text-align: center; margin-bottom: 80px;">
-        <div style="width: 1px; height: 35px; background: linear-gradient(to bottom, var(--accent-gold), transparent); margin: 0 auto 25px;"></div>
-        <p style="font-size: 14px; color: #999; letter-spacing: 2px; margin-bottom: 20px;">
-            <span style="color: var(--primary-brown); font-weight: 700;">治喪禮儀規劃：陳柏元 禮儀師</span><br>
-            <span style="font-size: 11px; color: #ccc;">祥安生命有限公司 ｜ 全程守護</span>
-        </p>
-        <a href="https://line.me/ti/p/nZJmE8-b6X" style="display: inline-flex; align-items: center; gap: 10px; border: 1px solid #00c300; color: #00c300; padding: 10px 30px; border-radius: 50px; text-decoration: none; font-size: 14px; font-weight: 700;">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" style="width: 16px;">
-            禮儀服務免費諮詢
-        </a>
-    </section>
-</main>
-
-<div class="fixed-nav">
-    <a href="tel:0938179858" class="nav-item"><img src="image/24小時專線.png" width="100%"></a>
-    <a href="https://line.me/ti/p/nZJmE8-b6X" class="nav-item"><img src="image/聯繫line.PNG" width="100%"></a>
-</div>
-
-<div id="lb-overlay" onclick="closeLB()">
-    <img src="" id="lb-img">
-</div>
-
-<footer style="padding: 160px 20px 180px; background: #fff; position: relative; text-align: center; overflow: hidden;">
-    
-    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.4; background-image: radial-gradient(circle at 50% 50%, rgba(166,124,82,0.1) 1px, transparent 1px); background-size: 40px 40px;"></div>
-    
-    <div class="footer-bg-text" style="position: absolute; top: 48%; left: 50%; font-size: 95px; letter-spacing: 8px; font-weight: 900; color: rgba(166,124,82,0.04); white-space: nowrap;">ETERNAL PEACE</div>
-    <div class="footer-bg-text" style="position: absolute; top: 56%; left: 50%; font-size: 65px; letter-spacing: 15px; font-weight: 400; color: rgba(166,124,82,0.03); white-space: nowrap; animation-delay: -5s;">GRATITUDE</div>
-
-    <div style="position: relative; z-index: 1;">
-        <div style="width: 40px; height: 1.5px; background: linear-gradient(to right, transparent, var(--accent-gold), transparent); margin: 0 auto 50px;"></div>
-        
-        <div style="font-size: 32px; font-weight: 900; color: var(--primary-brown); letter-spacing: 20px; margin-bottom: 30px; text-indent: 20px; filter: drop-shadow(0 0 1px rgba(166,124,82,0.2));">感 謝 ‧ 圓 滿</div>
-        
-        <p style="font-size: 16px; color: #777; line-height: 2.8; letter-spacing: 4px; max-width: 350px; margin: 0 auto 80px; font-weight: 400;">
-            感謝所有親友的陪伴與關懷<br>
-            <span style="color: var(--accent-gold); font-weight: 700;">翊卉 夫人</span> 已化作星辰<br>
-            守護著她最愛的人們
-        </p>
-
-        <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; opacity: 0.6;">
-            <div style="width: 60px; height: 0.5px; background: #ccc;"></div>
-            <div style="letter-spacing: 4px; font-size: 11px; color: #999;">
-                <span style="font-weight: 700;">祥安生命有限公司</span> ｜ 誠心服務
+    <footer>
+        <div style="max-width: 400px; margin: 40px auto 20px; background: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px; text-align: center; display: flex; align-items: center;">
+            <div style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; margin-right: 20px;">
+                <img src="image/IMG_8349.jpeg" alt="負責人照片" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+            </div>
+            <div style="flex: 1; text-align: left;">
+                <div class="company-logo">
+                    <p style="font-weight: 700; margin-bottom: 5px;">祥安生命有限公司</p>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <p style="font-size: 16px; margin: 5px 0;"><strong>承辦人員：陳柏元</strong></p>
+                    <p style="font-size: 16px; color: #007BFF; margin: 5px 0;">聯絡電話：0938-179-858</p>
+                </div>
+                <div style="margin-top: 15px;">
+                    <a href="https://line.me/ti/p/nZJmE8-b6X" target="_blank" style="display: inline-block; padding: 10px 20px; margin: 5px 0; background-color: #25D366; color: white; text-decoration: none; border-radius: 5px; font-size: 14px;">
+                        生命禮儀、禮俗 免費諮詢
+                    </a>
+                </div>
             </div>
         </div>
-        
-        <p style="margin-top: 50px; font-size: 10px; color: #ddd; letter-spacing: 2px;">© 2025 ALL RIGHTS RESERVED.</p>
-    </div>
-</footer>
 
-<script>
-    // 圖片 Loading 偵測
-    document.addEventListener("DOMContentLoaded", () => {
-        const imgs = document.querySelectorAll('.img-fluid');
-        imgs.forEach(img => {
-            if (img.complete) img.classList.add('loaded');
-            else img.onload = () => img.classList.add('loaded');
-        });
-    });
-
-    // 滑動進場
-    const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.1});
-    document.querySelectorAll('.reveal').forEach(s => obs.observe(s));
-
-    // 音樂控制
-    const music = document.getElementById('bgMusic');
-    const startM = () => { if(music.paused){ music.volume=0.3; music.play().catch(()=>{}); } };
-    ['touchstart','click'].forEach(evt => document.addEventListener(evt, startM, {once:true}));
-
-    // 花籃顯示
-    function toggleF() {
-        const g = document.getElementById('fGrid'), b = document.getElementById('fBtn');
-        const isH = g.style.display === 'none' || g.style.display === '';
-        g.style.display = isH ? 'grid' : 'none';
-        b.innerText = isH ? '收合花籃式樣' : '瀏覽花籃式樣 (A-H款)';
-    }
-
-    // 燈箱控制
-    const overlay = document.getElementById('lb-overlay'), lbImg = document.getElementById('lb-img');
-    document.querySelectorAll('.clickable').forEach(img => {
-        img.onclick = (e) => {
-            e.stopPropagation();
-            lbImg.src = img.src;
-            overlay.style.display = 'flex';
-            setTimeout(() => overlay.classList.add('active'), 10);
-        };
-    });
-    function closeLB() { overlay.classList.remove('active'); setTimeout(() => overlay.style.display = 'none', 400); }
-
-    // 功能按鈕
-    function addToCalendar() { window.open(`https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('簡翊卉夫人 追思奠禮')}&dates=20260106T080000/20260106T110000&location=${encodeURIComponent('新北市立殯儀館 崇仁廳')}`); }
-    function shareToLine() { window.open(`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(window.location.href)}`); }
-    function copyLink() { 
-        const t = document.createElement('textarea'); t.value = window.location.href; document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t);
-        alert('連結已複製。');
-    }
-</script>
-
-</body>
-
+        <div class="footer-info">
+            <p class="footer-text">
+                <strong class="fit-text">承辦禮儀公司 祥安生命有限公司 ｜ 禮儀師：陳柏元</strong>
+            </p>
+            <p class="footer-text">
+                <strong class="fit-text">© 2025 林陳月老夫人 訃告 ｜ <span class="highlight">祥安生命有限公司</span> 版權所有</strong>
+            </p>
+        </div>
+    </footer>
 
     <div id="fixed-links">
         <a href="tel:0938-179-858"><img src="image/24小時專線.png" alt="24小時服務電話" loading="lazy"></a>
