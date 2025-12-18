@@ -19,7 +19,7 @@
 /* CSS 變數：方便統一管理色彩和字型 */
 :root {
   --font-serif: 'Iansui', 'Noto Serif TC', serif;
-  --font-display: 'ZCOOL QingKe HuangYou', 'ZCOOL KuaiLe', sans-serif; /* 顯示標題用 */
+  --font-display: 'Iansui','ZCOOL QingKe HuangYou', 'ZCOOL KuaiLe', sans-serif; /* 顯示標題用 */
   --color-primary: #3d2b1f; /* 深棕色/主要文字 */
   --color-secondary: #8b5e3c; /* 咖啡色/強調 */
   --color-accent: #0077e6; /* 藍色/按鈕 */
